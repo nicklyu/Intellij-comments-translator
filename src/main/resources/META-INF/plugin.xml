@@ -15,7 +15,7 @@
     -->
 
     <extensions defaultExtensionNs="com.intellij">
-        <lang.foldingBuilder language="JAVA" implementationClass="com.nicklyu.translator.builders.JvmCommentProcessorFoldingBuilder" />
+        <lang.foldingBuilder language="JVM" implementationClass="com.nicklyu.translator.builders.JvmCommentProcessorFoldingBuilder" />
     </extensions>
 
     <actions>

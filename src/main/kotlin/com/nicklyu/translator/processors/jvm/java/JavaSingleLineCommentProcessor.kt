@@ -1,4 +1,4 @@
-package com.nicklyu.translator.processors
+package com.nicklyu.translator.processors.jvm.java
 
 import com.intellij.lang.folding.FoldingDescriptor
 import com.intellij.lang.folding.NamedFoldingDescriptor
@@ -7,8 +7,9 @@ import com.intellij.psi.JavaTokenType
 import com.intellij.psi.PsiComment
 import com.intellij.psi.PsiElement
 import com.intellij.psi.util.PsiTreeUtil
+import com.nicklyu.translator.processors.CommentProcessor
 
-object SingleLineCommentProcessor : CommentProcessor {
+object JavaSingleLineCommentProcessor : CommentProcessor {
     override fun process(element: PsiElement): Array<FoldingDescriptor> {
         val descriptors = mutableListOf<FoldingDescriptor>()
         PsiTreeUtil.findChildrenOfType(element, PsiComment::class.java)
