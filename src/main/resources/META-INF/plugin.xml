@@ -13,6 +13,11 @@
     <!-- uncomment to enable plugin in all products
     <depends>com.intellij.modules.lang</depends>
     -->
+    <project-components>
+        <component>
+            <implementation-class>com.nicklyu.translator.translators.TranslatorProvider</implementation-class>
+        </component>
+    </project-components>
 
     <extensions defaultExtensionNs="com.intellij">
         <lang.foldingBuilder language="JVM" implementationClass="com.nicklyu.translator.builders.JvmCommentProcessorFoldingBuilder" />

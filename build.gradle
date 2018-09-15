@@ -1,3 +1,7 @@
+buildscript {
+    ext.okhttp_version = '3.11.0'
+    ext.jackson_version = '2.9.6'
+}
 plugins {
     id 'java'
     id 'org.jetbrains.intellij' version '0.3.9'
@@ -15,6 +19,8 @@ repositories {
 
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+    compile "com.squareup.okhttp3:okhttp:$okhttp_version"
+    compile "com.fasterxml.jackson.module:jackson-module-kotlin:$jackson_version"
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 
