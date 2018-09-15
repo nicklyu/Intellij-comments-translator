@@ -2,18 +2,20 @@ package com.nicklyu.translator.processors.jvm.java
 
 import com.intellij.lang.folding.FoldingDescriptor
 import com.intellij.lang.folding.NamedFoldingDescriptor
+import com.intellij.openapi.project.Project
 import com.intellij.openapi.util.TextRange
-import com.intellij.psi.JavaDocTokenType
 import com.intellij.psi.JavaDocTokenType.DOC_COMMENT_DATA
 import com.intellij.psi.PsiElement
 import com.intellij.psi.javadoc.PsiDocComment
 import com.intellij.psi.javadoc.PsiDocToken
 import com.intellij.psi.util.PsiTreeUtil
 import com.nicklyu.translator.processors.CommentProcessor
+import com.nicklyu.translator.translators.TranslatorProvider
 
 object JavadocCommentProcessor : CommentProcessor {
-    override fun process(element: PsiElement): Array<FoldingDescriptor> {
+    override fun process(project: Project, element: PsiElement): Array<FoldingDescriptor> {
         val descriptors = mutableListOf<FoldingDescriptor>()
+        val translatorProvider = project.getComponent(TranslatorProvider::class.java)
 
         PsiTreeUtil.findChildrenOfType(element, PsiDocComment::class.java)
                 .forEach { comment ->
@@ -24,7 +26,7 @@ object JavadocCommentProcessor : CommentProcessor {
                                             commentPart.node,
                                             TextRange(commentPart.textRange.startOffset, commentPart.textRange.endOffset),
                                             null,
-                                            "${commentPart.text} highlighted" //todo change
+                                            translatorProvider.translator.translate(commentPart.text)
                                     )
                             )
                         }
