@@ -10,6 +10,7 @@ import com.intellij.psi.PsiElement
 import com.intellij.psi.util.PsiTreeUtil
 import com.nicklyu.translator.processors.CommentProcessor
 import com.nicklyu.translator.translators.TranslatorProvider
+import com.nicklyu.translator.translators.caching.TranslationCacheManager
 import org.slf4j.LoggerFactory
 
 object JavaSingleLineCommentProcessor : CommentProcessor {
@@ -20,6 +21,7 @@ object JavaSingleLineCommentProcessor : CommentProcessor {
 
         val descriptors = mutableListOf<FoldingDescriptor>()
         val translatorProvider = project.getComponent(TranslatorProvider::class.java)
+        val cacheManager = project.getComponent(TranslationCacheManager::class.java)
 
         PsiTreeUtil.findChildrenOfType(element, PsiComment::class.java)
                 .forEach { comment ->
@@ -29,8 +31,8 @@ object JavaSingleLineCommentProcessor : CommentProcessor {
                                         comment.node,
                                         TextRange(comment.textRange.startOffset, comment.textRange.endOffset),
                                         null,
-                                        translatorProvider.translator.translate(comment.text)
-                                )
+                                        cacheManager.get(comment.text)
+                                                ?: translatorProvider.translator.translate(comment.text))
                         )
                     }
                 }
