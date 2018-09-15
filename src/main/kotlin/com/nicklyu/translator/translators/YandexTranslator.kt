@@ -7,8 +7,11 @@ import okhttp3.MediaType
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody
+import org.slf4j.LoggerFactory
 
 class YandexTranslator : Translator {
+    private val logger = LoggerFactory.getLogger(this::class.java)
+
     private val commonUrlPart = "https://translate.yandex.net/api/v1.5/tr.json/translate"
 
     private val key = ConfigReader.readProperty("translator.yandex.key")
@@ -28,7 +31,9 @@ class YandexTranslator : Translator {
                 .post(body)
                 .build()
         val response = client.newCall(request).execute().body()?.get<YandexResponse>()
+        logger.debug("Translation status ${response?.code}. [${response?.text.orEmpty()}]")
 
         return response?.text?.joinToString().orEmpty()
     }
+
 }

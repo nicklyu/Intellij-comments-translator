@@ -6,11 +6,15 @@ import com.intellij.lang.folding.FoldingDescriptor
 import com.intellij.openapi.editor.Document
 import com.intellij.psi.PsiElement
 import com.nicklyu.translator.processors.CommentProcessor
+import org.slf4j.LoggerFactory
 
 abstract class CommentTranslatorFoldingBuilder : FoldingBuilderEx() {
+    private val logger = LoggerFactory.getLogger(CommentTranslatorFoldingBuilder::class.java)
+
     override fun getPlaceholderText(node: ASTNode) = ". . ."//todo research
 
     override fun buildFoldRegions(root: PsiElement, document: Document, quick: Boolean): Array<FoldingDescriptor> {
+        logger.trace("Folding requested for $root :: $document")
         return getProcessors().process(
                 element = root
         )

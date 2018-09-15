@@ -10,9 +10,14 @@ import com.intellij.psi.PsiElement
 import com.intellij.psi.util.PsiTreeUtil
 import com.nicklyu.translator.processors.CommentProcessor
 import com.nicklyu.translator.translators.TranslatorProvider
+import org.slf4j.LoggerFactory
 
 object JavaSingleLineCommentProcessor : CommentProcessor {
+    private val logger = LoggerFactory.getLogger(this::class.java)
+
     override fun process(project: Project, element: PsiElement): Array<FoldingDescriptor> {
+        logger.trace("Processing $element started")
+
         val descriptors = mutableListOf<FoldingDescriptor>()
         val translatorProvider = project.getComponent(TranslatorProvider::class.java)
 
@@ -29,6 +34,8 @@ object JavaSingleLineCommentProcessor : CommentProcessor {
                         )
                     }
                 }
+        logger.trace("Processing $element finished")
+
         return descriptors.toTypedArray()
     }
 }
