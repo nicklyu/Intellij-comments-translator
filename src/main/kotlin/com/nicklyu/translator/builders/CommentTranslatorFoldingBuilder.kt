@@ -4,7 +4,6 @@ import com.intellij.lang.ASTNode
 import com.intellij.lang.folding.FoldingBuilderEx
 import com.intellij.lang.folding.FoldingDescriptor
 import com.intellij.openapi.editor.Document
-import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiElement
 import com.nicklyu.translator.processors.CommentProcessor
 
@@ -13,7 +12,6 @@ abstract class CommentTranslatorFoldingBuilder : FoldingBuilderEx() {
 
     override fun buildFoldRegions(root: PsiElement, document: Document, quick: Boolean): Array<FoldingDescriptor> {
         return getProcessors().process(
-                project = root.project,
                 element = root
         )
     }
@@ -25,10 +23,10 @@ abstract class CommentTranslatorFoldingBuilder : FoldingBuilderEx() {
 
     protected abstract fun getProcessors(): Array<CommentProcessor>
 
-    private fun Array<CommentProcessor>.process(project: Project, element: PsiElement): Array<FoldingDescriptor> {
+    private fun Array<CommentProcessor>.process(element: PsiElement): Array<FoldingDescriptor> {
         val descriptors = mutableListOf<FoldingDescriptor>()
         this.forEach { processor ->
-            descriptors.addAll(processor.process(project, element))
+            descriptors.addAll(processor.process(element.project, element))
         }
         return descriptors.toTypedArray()
     }
