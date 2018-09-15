@@ -5,7 +5,7 @@ jdk:
   - oraclejdk8
 
 script:
-  - ./gradlew clean build
+  - gradle clean build
 
 # configure caching (https://docs.travis-ci.com/user/languages/java/#Caching)
 before_cache:
