@@ -17,6 +17,10 @@
         <component>
             <implementation-class>com.nicklyu.translator.translators.TranslatorProvider</implementation-class>
         </component>
+        <component>
+            <implementation-class>com.nicklyu.translator.translators.caching.TranslationCacheManager
+            </implementation-class>
+        </component>
     </project-components>
 
     <extensions defaultExtensionNs="com.intellij">

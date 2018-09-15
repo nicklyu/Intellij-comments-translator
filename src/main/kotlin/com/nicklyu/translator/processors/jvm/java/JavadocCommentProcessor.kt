@@ -11,6 +11,7 @@ import com.intellij.psi.javadoc.PsiDocToken
 import com.intellij.psi.util.PsiTreeUtil
 import com.nicklyu.translator.processors.CommentProcessor
 import com.nicklyu.translator.translators.TranslatorProvider
+import com.nicklyu.translator.translators.caching.TranslationCacheManager
 import org.slf4j.LoggerFactory
 
 object JavadocCommentProcessor : CommentProcessor {
@@ -20,6 +21,7 @@ object JavadocCommentProcessor : CommentProcessor {
         logger.trace("Processing $element started")
         val descriptors = mutableListOf<FoldingDescriptor>()
         val translatorProvider = project.getComponent(TranslatorProvider::class.java)
+        val cacheManager = project.getComponent(TranslationCacheManager::class.java)
 
         PsiTreeUtil.findChildrenOfType(element, PsiDocComment::class.java)
                 .forEach { comment ->
@@ -30,7 +32,8 @@ object JavadocCommentProcessor : CommentProcessor {
                                             commentPart.node,
                                             TextRange(commentPart.textRange.startOffset, commentPart.textRange.endOffset),
                                             null,
-                                            translatorProvider.translator.translate(commentPart.text)
+                                            cacheManager.get(commentPart.text)
+                                                    ?: translatorProvider.translator.translate(commentPart.text)
                                     )
                             )
                         }
