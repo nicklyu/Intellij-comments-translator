@@ -8,7 +8,7 @@ class CommentsTranslatorSettingsForm : CommentsTranslatorSettingsFormTemplate() 
     init {
         val state = CommentsTranslatorSettingsState.instance
         TranslatorType.values().forEach { type ->
-            translatorTypeComboBox.addItem(type.name)
+            translatorTypeComboBox.addItem(type.translatorName)
         }
         apiKeyTextField.text = state.currentApiKey()
         translatorDesctibtionPane.text = state.currentApiDescription()
@@ -22,5 +22,5 @@ class CommentsTranslatorSettingsForm : CommentsTranslatorSettingsFormTemplate() 
 
     fun apiKey() = apiKeyTextField.text.orEmpty()
 
-    fun translator() = TranslatorType.valueOf(translatorTypeComboBox.selectedItem as String)
+    fun translator() = TranslatorType.type(translatorTypeComboBox.selectedItem as String)
 }
