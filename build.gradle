@@ -1,6 +1,7 @@
 buildscript {
     ext.okhttp_version = '3.11.0'
     ext.jackson_version = '2.9.6'
+    ext.kotlin_coroutines = '0.21'
 }
 plugins {
     id 'java'
@@ -21,6 +22,7 @@ dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
     compile "com.squareup.okhttp3:okhttp:$okhttp_version"
     compile "com.fasterxml.jackson.module:jackson-module-kotlin:$jackson_version"
+    compile "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlin_coroutines"
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 
@@ -33,6 +35,13 @@ compileTestKotlin {
 intellij {
     version '2018.2'
 }
+
+kotlin {
+    experimental {
+        coroutines 'enable'
+    }
+}
+
 patchPluginXml {
     changeNotes """
       Add change notes here.<br>

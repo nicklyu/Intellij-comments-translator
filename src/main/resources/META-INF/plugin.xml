@@ -25,6 +25,9 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <lang.foldingBuilder language="JVM" implementationClass="com.nicklyu.translator.builders.JvmCommentProcessorFoldingBuilder" />
+        <applicationService serviceImplementation="com.nicklyu.translator.settings.CommentsTranslatorSettingsState"/>
+        <applicationConfigurable instance="com.nicklyu.translator.settings.CommentsTranslatorSettings"
+                                 id="comment-translator.app.config"/>
     </extensions>
 
     <actions>

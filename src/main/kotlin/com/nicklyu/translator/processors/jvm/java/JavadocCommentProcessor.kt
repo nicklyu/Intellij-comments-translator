@@ -12,6 +12,7 @@ import com.intellij.psi.util.PsiTreeUtil
 import com.nicklyu.translator.processors.CommentProcessor
 import com.nicklyu.translator.translators.TranslatorProvider
 import com.nicklyu.translator.translators.caching.TranslationCacheManager
+import com.nicklyu.translator.translators.exceptions.InvalidApiKeyException
 import org.slf4j.LoggerFactory
 
 object JavadocCommentProcessor : CommentProcessor {
@@ -23,23 +24,28 @@ object JavadocCommentProcessor : CommentProcessor {
         val translatorProvider = project.getComponent(TranslatorProvider::class.java)
         val cacheManager = project.getComponent(TranslationCacheManager::class.java)
 
-        PsiTreeUtil.findChildrenOfType(element, PsiDocComment::class.java)
-                .forEach { comment ->
-                    comment.children.forEach { commentPart ->
-                        commentPart.runIfElementIsJavadocLine {
-                            descriptors.add(
-                                    NamedFoldingDescriptor(
-                                            commentPart.node,
-                                            TextRange(commentPart.textRange.startOffset, commentPart.textRange.endOffset),
-                                            null,
-                                            cacheManager.get(commentPart.text)
-                                                    ?: translatorProvider.translator.translate(commentPart.text)
-                                    )
-                            )
+        try {
+            PsiTreeUtil.findChildrenOfType(element, PsiDocComment::class.java)
+                    .forEach { comment ->
+                        comment.children.forEach { commentPart ->
+                            commentPart.runIfElementIsJavadocLine {
+                                descriptors.add(
+                                        NamedFoldingDescriptor(
+                                                commentPart.node,
+                                                TextRange(commentPart.textRange.startOffset, commentPart.textRange.endOffset),
+                                                null,
+                                                cacheManager.get(commentPart.text)
+                                                        ?: translatorProvider.translator.translate(commentPart.text)
+                                        )
+                                )
+                            }
                         }
                     }
-                }
-        logger.trace("Processing $element finished")
+            logger.trace("Processing $element finished")
+        } catch (e: InvalidApiKeyException) {
+            logger.debug("Yandex remote translator responded : ${e.message}")
+            //todo: add popup
+        }
         return descriptors.toTypedArray()
     }
 

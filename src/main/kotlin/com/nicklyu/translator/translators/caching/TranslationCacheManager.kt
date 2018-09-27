@@ -21,4 +21,8 @@ class TranslationCacheManager : ProjectComponent {
         logger.debug("Value $translation cached for phrase $phrase")
         return !cache.put(phrase, translation).isNullOrEmpty()
     }
+
+    fun clear() {
+        cache.clear()
+    }
 }
