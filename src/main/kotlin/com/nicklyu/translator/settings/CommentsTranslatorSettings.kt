@@ -1,8 +1,10 @@
 package com.nicklyu.translator.settings
 
 import com.intellij.openapi.options.Configurable
+import com.intellij.openapi.project.ProjectManager
 import com.nicklyu.translator.settings.ui.CommentsTranslatorSettingsForm
 import com.nicklyu.translator.translators.TranslatorType
+import com.nicklyu.translator.translators.caching.TranslationCacheManager
 import javax.swing.JComponent
 
 class CommentsTranslatorSettings : Configurable {
@@ -34,6 +36,12 @@ class CommentsTranslatorSettings : Configurable {
     override fun apply() {
         val state = CommentsTranslatorSettingsState.instance
 
+        //todo: separate cache for each language
+        if (state.currentChosenLanguage() != settingsForm!!.targetLanguage()) {
+            ProjectManager.getInstance().openProjects.forEach { project ->
+                project.getComponent(TranslationCacheManager::class.java).clear()
+            }
+        }
         //type
         state.currentTranslator = settingsForm!!.translator()
 
