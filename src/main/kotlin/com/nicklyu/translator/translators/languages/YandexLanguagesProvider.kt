@@ -1,7 +1,7 @@
 package com.nicklyu.translator.translators.languages
 
 import com.nicklyu.translator.settings.CommentsTranslatorSettingsState
-import com.nicklyu.translator.translators.models.YandexLanguageResponce
+import com.nicklyu.translator.translators.models.YandexLanguageResponse
 import com.nicklyu.translator.translators.models.get
 import okhttp3.MediaType
 import okhttp3.OkHttpClient
@@ -22,7 +22,7 @@ object YandexLanguagesProvider : LanguagesProvider {
                 .url(requestUrl)
                 .post(body)
                 .build()
-        val responce = client.newCall(request).execute().body()?.get<YandexLanguageResponce>()
+        val responce = client.newCall(request).execute().body()?.get<YandexLanguageResponse>()
 
         return responce?.langs ?: CommentsTranslatorSettingsState.instance.yandexTargetLanguages
     }

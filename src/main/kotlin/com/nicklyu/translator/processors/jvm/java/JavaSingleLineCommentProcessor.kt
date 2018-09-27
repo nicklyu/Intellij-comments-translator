@@ -3,12 +3,14 @@ package com.nicklyu.translator.processors.jvm.java
 import com.intellij.lang.folding.FoldingDescriptor
 import com.intellij.lang.folding.NamedFoldingDescriptor
 import com.intellij.openapi.project.Project
+import com.intellij.openapi.ui.MessageType
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.JavaTokenType
 import com.intellij.psi.PsiComment
 import com.intellij.psi.PsiElement
 import com.intellij.psi.util.PsiTreeUtil
 import com.nicklyu.translator.processors.CommentProcessor
+import com.nicklyu.translator.settings.notifiers.PopupCreator
 import com.nicklyu.translator.translators.TranslatorProvider
 import com.nicklyu.translator.translators.caching.TranslationCacheManager
 import com.nicklyu.translator.translators.exceptions.InvalidApiKeyException
@@ -42,6 +44,7 @@ object JavaSingleLineCommentProcessor : CommentProcessor {
         } catch (e: InvalidApiKeyException) {
             logger.debug("Yandex remote translator responded : ${e.message}")
             //todo: add popup
+            PopupCreator.createPopup(project, "Yandex remote translator responded : ${e.message}", MessageType.ERROR)
         }
 
         return descriptors.toTypedArray()
