@@ -10,6 +10,10 @@ class CommentsTranslatorSettingsForm : CommentsTranslatorSettingsFormTemplate() 
         TranslatorType.values().forEach { type ->
             translatorTypeComboBox.addItem(type.translatorName)
         }
+        state.currentLanguageList().forEach {
+            languageComboBox.addItem(it.value)
+        }
+        languageComboBox.selectedItem = state.currentLanguageList()[state.currentChosenLanguage()]
         apiKeyTextField.text = state.currentApiKey()
         translatorDesctibtionPane.text = state.currentApiDescription()
         translatorTypeComboBox.addActionListener {
@@ -23,4 +27,17 @@ class CommentsTranslatorSettingsForm : CommentsTranslatorSettingsFormTemplate() 
     fun apiKey() = apiKeyTextField.text.orEmpty()
 
     fun translator() = TranslatorType.type(translatorTypeComboBox.selectedItem as String)
+
+    fun targetLanguage() =
+            CommentsTranslatorSettingsState.instance.currentLanguageList().getCode(languageComboBox.selectedItem as String)
+
+
+    private fun MutableMap<String, String>.getCode(language: String): String {
+        var targetCode: String? = null
+        this.forEach { code, lang ->
+            if (lang == language)
+                targetCode = code
+        }
+        return targetCode ?: throw IllegalArgumentException("Unknown language name")
+    }
 }

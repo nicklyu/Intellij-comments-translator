@@ -25,6 +25,7 @@ class CommentsTranslatorSettings : Configurable {
         val isModified =
                 state.currentTranslator != settingsForm!!.translator()
                         || state.currentApiKey() != settingsForm!!.apiKey()
+                        || state.currentChosenLanguage() != settingsForm!!.targetLanguage()
 
 
         return isModified
@@ -36,15 +37,18 @@ class CommentsTranslatorSettings : Configurable {
         //type
         state.currentTranslator = settingsForm!!.translator()
 
-        //api key
+        //api key and language
         when (state.currentTranslator) {
-            TranslatorType.YANDEX -> state.yandexApiKey = settingsForm!!.apiKey()
+            TranslatorType.YANDEX -> {
+                state.yandexApiKey = settingsForm!!.apiKey()
+                state.yandexChosenLanguage = settingsForm!!.targetLanguage()
+            }
         }
-
     }
 
     override fun createComponent(): JComponent? {
         initializeSettings()
+        CommentsTranslatorSettingsState.instance.updateLanguageList()
         return settingsForm!!.content
     }
 }

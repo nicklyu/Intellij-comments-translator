@@ -30,7 +30,7 @@ class YandexTranslator(project: Project) : Translator {
                 commonUrlPart +
                         "?key=$key" +
                         "&text=$phrase" +
-                        "&lang=ru" //todo: change language
+                        "&lang=${settings.currentChosenLanguage()}"
 
         val request = Request.Builder()
                 .url(requestUrl)
