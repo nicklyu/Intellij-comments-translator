@@ -48,6 +48,8 @@ class CommentsTranslatorSettings : Configurable {
 
     override fun createComponent(): JComponent? {
         initializeSettings()
+
+        //todo: think about finding better place to update language list
         CommentsTranslatorSettingsState.instance.updateLanguageList()
         return settingsForm!!.content
     }

@@ -1,16 +1,21 @@
 package com.nicklyu.translator.settings
 
+import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.components.PersistentStateComponent
 import com.intellij.openapi.components.ServiceManager
 import com.intellij.openapi.components.State
 import com.intellij.openapi.components.Storage
 import com.intellij.util.xmlb.XmlSerializerUtil
+import com.nicklyu.translator.settings.notifiers.LanguagesListUpdateNotifier
 import com.nicklyu.translator.translators.TranslatorType
 import com.nicklyu.translator.translators.languages.YandexLanguagesProvider
 import kotlinx.coroutines.experimental.launch
 
 @State(name = "CommentsTranslatorConfig", storages = arrayOf(Storage("CommentsTranslatorSettingsState.xml")))
 class CommentsTranslatorSettingsState : PersistentStateComponent<CommentsTranslatorSettingsState> {
+
+    @Transient
+    private val publisher = ApplicationManager.getApplication().messageBus.syncPublisher(LanguagesListUpdateNotifier.LANGUAGES_LIST_UPDATED)
 
     /**
      * For active [TranslatorType] you must define corresponding api key (see [yandexApiKey])
@@ -66,6 +71,8 @@ class CommentsTranslatorSettingsState : PersistentStateComponent<CommentsTransla
         launch {
             val languages = languagesProvider.getLanguagesList()
             yandexTargetLanguages = languages
+            //TODO: update setting form
+            publisher.listUpdated()
         }
     }
 
