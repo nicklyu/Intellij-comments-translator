@@ -14,10 +14,13 @@ abstract class CommentTranslatorFoldingBuilder : FoldingBuilderEx() {
     override fun getPlaceholderText(node: ASTNode) = ". . ."//todo research
 
     override fun buildFoldRegions(root: PsiElement, document: Document, quick: Boolean): Array<FoldingDescriptor> {
-        logger.trace("Folding requested for $root :: $document")
-        return getProcessors().process(
-                element = root
-        )
+        if (!quick) {
+            logger.trace("Folding requested for $root :: $document")
+            return getProcessors().process(
+                    element = root
+            )
+        }
+        return arrayOf()
     }
 
     /**
