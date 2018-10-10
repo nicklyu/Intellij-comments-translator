@@ -32,5 +32,10 @@
 
     <actions>
         <!-- Add your actions here -->
+        <action id="com.nicklyu.translator.translators.action.TranslateSelectedComment"
+                class="com.nicklyu.translator.translators.action.TranslateSelectedComment"
+                text="Translate selected comment" description="Translate comments in selected region">
+            <keyboard-shortcut keymap="$default" first-keystroke="alt D"/>
+        </action>
     </actions>
 </idea-plugin>
