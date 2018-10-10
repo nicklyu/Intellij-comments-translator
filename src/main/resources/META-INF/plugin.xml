@@ -1,18 +1,16 @@
 <idea-plugin>
     <id>com.nicklyu.comments-translator</id>
     <name>Comments translator</name>
-    <vendor email="support@yourcompany.com" url="http://www.yourcompany.com">YourCompany</vendor>
+    <vendor email="lyubimov.nkt@gmail.com" url="https://github.com/nicklyu/Intellij-comments-translator">Nicklyu
+    </vendor>
 
     <description><![CDATA[
-    Enter short description for your plugin here.<br>
-    <em>most HTML tags may be used</em>
+        Plugin for intellij platform allowing to translate comments in code
     ]]></description>
 
-    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
-         on how to target different products -->
-    <!-- uncomment to enable plugin in all products
-    <depends>com.intellij.modules.lang</depends>
-    -->
+    <idea-version since-build="173"/>
+    <depends>com.intellij.modules.java</depends>
+
     <project-components>
         <component>
             <implementation-class>com.nicklyu.translator.translators.TranslatorProvider</implementation-class>
@@ -24,14 +22,14 @@
     </project-components>
 
     <extensions defaultExtensionNs="com.intellij">
-        <lang.foldingBuilder language="JVM" implementationClass="com.nicklyu.translator.builders.JvmCommentProcessorFoldingBuilder" />
+        <lang.foldingBuilder language="JVM"
+                             implementationClass="com.nicklyu.translator.builders.JvmCommentProcessorFoldingBuilder"/>
         <applicationService serviceImplementation="com.nicklyu.translator.settings.CommentsTranslatorSettingsState"/>
         <applicationConfigurable instance="com.nicklyu.translator.settings.CommentsTranslatorSettings"
                                  id="comment-translator.app.config"/>
     </extensions>
 
     <actions>
-        <!-- Add your actions here -->
         <action id="com.nicklyu.translator.translators.action.TranslateSelectedComment"
                 class="com.nicklyu.translator.translators.action.TranslateSelectedComment"
                 text="Translate selected comment" description="Translate comments in selected region">
