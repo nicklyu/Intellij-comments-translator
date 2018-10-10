@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/nicklyu/Intellij-comments-translator.svg?branch=master)](https://travis-ci.org/nicklyu/Intellij-comments-translator)
+
 # Intellij comments translator plugin
 Plugin for intellij platform allowing to translate comments in code
 
