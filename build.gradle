@@ -45,12 +45,6 @@ kotlin {
     }
 }
 
-publishPlugin {
-    username intellijPublishUsername
-    password intellijPublishPassword
-    channels 'default'
-}
-
 patchPluginXml {
     changeNotes """
     Plugin published
