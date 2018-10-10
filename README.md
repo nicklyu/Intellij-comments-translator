@@ -24,11 +24,11 @@ Firstly, you must configure plugin in Settings (File -> Settings -> Comments tra
 
 ![Settings](/doc/images/settings.PNG)
 
-After settings applied, all opening files will be translated automatically.
+After settings are applied, all opening files will be translated automatically.
 
 To translate some region manually you can use our action (by default alt D)
 It translate comments in selected region
 ![Action demonstration](/doc/images/selection-translation.gif)
 
 ##### Translator:
-Now we support only yandex translator. Configuration and how to get API key available [here](https://translate.yandex.com/developers/keys) 
+Currently, we support only yandex translator. Configuration and how to get API key are available here [here](https://translate.yandex.com/developers/keys) 
