@@ -10,11 +10,11 @@ After:
 ![After translation](/doc/images/after.png)
 
 ### Languages
--[x] Java
--[ ] Kotlin
--[ ] Groovy
--[ ] C#
--[ ] Python
+- [x] Java
+- [ ] Kotlin
+- [ ] Groovy
+- [ ] C#
+- [ ] Python
 
 ### How to use:
 
