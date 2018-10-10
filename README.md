@@ -9,6 +9,13 @@ After:
 
 ![After translation](/doc/images/after.png)
 
+### Languages
+-[x] Java
+-[ ] Kotlin
+-[ ] Groovy
+-[ ] C#
+-[ ] Python
+
 ### How to use:
 
 Firstly, you must configure plugin in Settings (File -> Settings -> Comments translator)
@@ -22,4 +29,4 @@ It translate comments in selected region
 ![Action demonstration](/doc/images/selection-translation.gif)
 
 ##### Translator:
-Now we support only yandex translator. Configuration and how to get API key available [here]() 
+Now we support only yandex translator. Configuration and how to get API key available [here](https://translate.yandex.com/developers/keys) 
